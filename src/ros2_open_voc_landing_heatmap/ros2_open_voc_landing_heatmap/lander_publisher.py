@@ -4,8 +4,8 @@ Autonomous landing module
 Uses semantic segmentation and depth data to detect safe landing zones.
 Controls UAV movement and landing approach.
 """
-
-EXPERIMENT_TYPE = "PEACE"
+# default, DOVESEI & PEACE.
+EXPERIMENT_TYPE = "default"
 PEACE_MAX_COUNT = 200
 
 import sys
