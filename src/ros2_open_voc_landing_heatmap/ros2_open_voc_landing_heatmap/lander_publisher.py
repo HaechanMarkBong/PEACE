@@ -17,7 +17,6 @@ import json
 import numpy as np
 import cv2
 
-
 from ros2_open_voc_landing_heatmap_srv.srv import GetLandingHeatmap
 from sensor_msgs.msg import Image as ImageMsg
 from geometry_msgs.msg import Twist
@@ -34,14 +33,17 @@ from tf2_ros import TransformException
 from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
 
-
 from message_filters import ApproximateTimeSynchronizer, Subscriber
-
 
 from cv_bridge import CvBridge
 
 from PIL import Image
 from clip_interrogator import Config, Interrogator
+
+from cognifly import Cognifly
+
+# Create a Cognifly object (resets the controller).
+cf = Cognifly(drone_hostname = "mendel@cognifly.local")
 
 caption_model_name = 'blip-base'
 clip_model_name = 'ViT-L-14/openai'
@@ -759,7 +761,21 @@ class LandingModule(Node):
         self.publish_twist(0,0,0)
         self.publish_status()
         self.get_logger().error('Shutting down... sending zero velocities!')
+        
+        # Land.
+        cf.land_nonblocking()
 
+        # Time.
+        print("Flight Time: " + cf.get_time())
+
+        # Stop stream.
+        cf.streamoff()
+
+        # Return Home.
+        cf.set_position_nonblocking(x = 0, y = 0, z = 0, yaw = 0, max_velocity = 0.25, max_yaw_rate = 0.5, max_duration = 10, relative = False)
+
+        # Reset the drone (reinitializes coordinate system).
+        cf.reset()
 
 def main():
     debug = False
