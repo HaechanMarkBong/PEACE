@@ -43,7 +43,7 @@ from clip_interrogator import Config, Interrogator
 from cognifly import Cognifly
 
 # Create a Cognifly object (resets the controller).
-cf = Cognifly(drone_hostname = "mendel@cognifly.local")
+cf = Cognifly(drone_hostname = "mendel@192.168.0.2")
 
 caption_model_name = 'blip-base'
 clip_model_name = 'ViT-L-14/openai'
