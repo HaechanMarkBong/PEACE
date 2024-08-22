@@ -5,7 +5,7 @@ Uses semantic segmentation and depth data to detect safe landing zones.
 Controls UAV movement and landing approach.
 """
 # default, DOVESEI & PEACE.
-EXPERIMENT_TYPE = "default"
+EXPERIMENT_TYPE = "PEACE"
 PEACE_MAX_COUNT = 200
 
 import sys
