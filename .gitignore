@@ -58,5 +58,6 @@ aerialview_cache/
 
 not_on_git/
 .ipynb_checkpoints/
+**/.idea/
 
 **/experiment_*/
